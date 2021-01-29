@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александра Моррисон](https://up.htmlacademy.ru/javascript/22/user/1173371).
-* Наставник: `Андрей Карякин`.(https://htmlacademy.ru/profile/id133011).
+* Наставник: [Андрей Карякин](https://up.htmlacademy.ru/javascript/22/user/1173371).
 
 ---
 
