@@ -1,33 +1,37 @@
 'use strict';
 
-const getRandomIntIncl = (min, max) => {
-
-  if (min < 0 || max < 0 ) {
-    return -1;
+// проверка длины и типа комментария
+const isCommentOverLimit = (comment, maxLength = 140) => {
+  try {
+    if (typeof comment != 'string') {
+      throw new TypeError('Not a String');
+    } else {
+      return comment.length > maxLength;
+    }
+  } catch(err) {
+    return err.name + ':' + err.message
   }
-
-  min = Math.ceil(min); // получаем минимальное число, округленное в большую сторону
-  max = Math.floor(max); // получаем максимальное число, округленное в меньшую сторону, либо равное заданному
-
-  if (max < min) {
-    [min, max] = [max, min]
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-getRandomIntIncl(5, 21);
-
-// проверка
-// for (let i = 0; i<20; i++) {
-//   let randomResult = getRandomIntIncl(5, 13)
-//   if (randomResult === -1) {
-//     console.log("ошибка");
-//   } else console.log(randomResult);
-// }
-
-// проверка длины комментария
-const isCommentOverLimit = (comment, maxLength) => {
-  return comment.length > maxLength;
 }
 
-isCommentOverLimit('Мой комментарий', 140);
+isCommentOverLimit(15, 2);
+
+
+// Возвразщает случайное целое число из диапозона
+const getRandomIntIncl = (min, max) => {
+  try {
+    if (isNaN(min) || isNaN(max)) {
+      throw new TypeError('Not a number');
+    } else if (min < 0 || max < 0 ) {
+      throw new RangeError('Outside of valid range');
+    } else if (max < min) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      [min, max] = [max, min]
+    }
+  } catch(err) {
+    return err.name + ' : ' + err.message;
+  }
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+getRandomIntIncl(5, 15);
