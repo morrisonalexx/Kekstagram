@@ -45,7 +45,7 @@ const descriptions = [
   'Кек',
   'Не подарили - а накодил',
   'Свободу политзаключенным!',
-  'Мой апарт-отель в Геленжике',
+  'Мой апарт-отель в Геленджике',
 ]
 
 const names = [
@@ -64,7 +64,10 @@ const messages = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
+const PHOTOS = 25;
+
 const getRandomArrayElement = (elements) => {
+  // eslint-disable-next-line no-undef
   return elements[_.random(0, elements.length - 1)];
 };
 
@@ -92,6 +95,6 @@ const createPhotoDescription = (index) => {
   };
 };
 
-const descriptionArray = new Array(25).fill(null).map((element, index) => createPhotoDescription(index));
+const descriptionArray = new Array(PHOTOS).fill(null).map((element, index) => createPhotoDescription(index));
 
 console.log(descriptionArray);
