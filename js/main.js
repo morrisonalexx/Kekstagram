@@ -135,3 +135,6 @@ const createPhotoDescriptionArray = (numberOfPhotos) => {
 }
 
 const descriptionArray = createPhotoDescriptionArray(PHOTOS);
+
+/* eslint-disable no-console */
+console.log(descriptionArray);
