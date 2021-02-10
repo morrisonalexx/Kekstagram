@@ -16,7 +16,6 @@ try {
   console.error(err.name + ':' + err.message)
 }
 
-
 // Возвразщает случайное целое число из диапозона
 const getRandomIntIncl = (min, max) => {
   if (isNaN(min) || isNaN(max)) {
@@ -39,8 +38,7 @@ try {
 }
 
 // функции для создания массива
-
-const descriptions = [
+const DESCRIPTIONS = [
   'Не заинстаграмил - не поел',
   'Кек',
   'Не подарили - а накодил',
@@ -48,14 +46,14 @@ const descriptions = [
   'Мой апарт-отель в Геленджике',
 ]
 
-const names = [
+const NAMES = [
   'Valera',
   'Vasya',
   'Alex',
   'Alfred',
 ]
 
-const messages = [
+const MESSAGES = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -65,36 +63,75 @@ const messages = [
 ];
 
 const PHOTOS = 25;
+const MAX_NUMBER_OF_COMMENTS = 5;
+
+let commentID = 0;                                            // счетчик комментариев; можно сделать случайным по аналогии с айдишниками описаний и фото
+let descriptionIDs =[];                                       // Глобальный массив идентификаторов
+let photoIDs =[];                                             // Глобальный массив идентификаторов
+
+const getCommentID = () => {
+  return commentID += 1;
+}
+
+const getRandomIntID = (idArrayName, min, max) => {
+  let randomIntID = getRandomIntIncl(min, max);                // создаем случайное число
+
+  while(idArrayName.includes(randomIntID)){                    // проверяем есть ли в массиве идентификатров такое число, если есть
+    randomIntID = getRandomIntIncl(min,max);                   // создаем еще одно случайное число пока не появится такое число, которого нет в массиве
+  }
+
+  idArrayName.push(randomIntID);                               // пушим число в массив
+  return randomIntID;
+};
 
 const getRandomArrayElement = (elements) => {
-  // eslint-disable-next-line no-undef
-  return elements[_.random(0, elements.length - 1)];
+  return elements[Math.floor(Math.random() * elements.length)];
 };
 
-const createComments = () => {
-  const randomIndexComment = getRandomIntIncl(1, 30);
+// Cоздаем один коментарий
+const createComment = () => {
 
   return {
-    id: randomIndexComment,
+    id: getCommentID(),
     avatar: 'img/avatar-' + getRandomIntIncl(1, 6) +'.svg',
-    message: getRandomArrayElement(messages),
-    name: getRandomArrayElement(names),
+    message: getRandomArrayElement(MESSAGES),
+    name: getRandomArrayElement(NAMES),
   };
 };
 
-const createPhotoDescription = (index) => {
-  index += 1;
-  const randomLikes = getRandomIntIncl(15, 200);
+// Создаем массив комментариев
+const createComments = (maxNumberOfComments) => {
+  let comments = [];
+  let numberOfComments = getRandomIntIncl(1, maxNumberOfComments);
+
+  for (let i = 0; i < numberOfComments; i++){
+    let comment = createComment();
+    comments.push(comment);
+  }
+  return comments;
+};
+
+// Создаем одно описание одной фотографии
+const createPhotoDescription = () => {
 
   return {
-    id: index,
-    url: 'photos/' + index + '.jpg',
-    description: getRandomArrayElement(descriptions),
-    likes: randomLikes,
-    comments: createComments(),
+    id: getRandomIntID(descriptionIDs, 1, 25),
+    url: 'photos/' + getRandomIntID(photoIDs, 1, 25) + '.jpg',
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomIntIncl(15, 200),
+    comments: createComments(MAX_NUMBER_OF_COMMENTS),
   };
 };
 
-const descriptionArray = new Array(PHOTOS).fill(null).map((element, index) => createPhotoDescription(index));
+// Создаем массив описаний  фотографий
+const createPhotoDescriptionArray = (numberOfPhotos) => {
+  let photoDescriptionArray = [];
 
-console.log(descriptionArray);
+  for (let i = 0; i < numberOfPhotos; i++) {
+    let photoDescription = createPhotoDescription();
+    photoDescriptionArray.push(photoDescription);
+  }
+  return photoDescriptionArray;
+}
+
+const descriptionArray = createPhotoDescriptionArray(PHOTOS);
