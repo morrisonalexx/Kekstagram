@@ -4,9 +4,8 @@
 const isValidComment = (comment, maxLength = 140) => {
   if (typeof comment != 'string') {
     throw new TypeError('Not a String');
-  } else {
-    return comment.length > maxLength;
   }
+  return comment.length > maxLength;
 }
 
 try {
@@ -17,14 +16,15 @@ try {
 }
 
 // Возвразщает случайное целое число из диапозона
-const getRandomIntIncl = (min, max) => {
+const getRandomIntIncl = (minNumber, maxNumber) => {
+  let min = Math.floor(minNumber);
+  let max = Math.floor(maxNumber);
+
   if (isNaN(min) || isNaN(max)) {
     throw new TypeError('Not a number');
-  } else if (min < 0 || max < 0 ) {
+  } if (min < 0 || max < 0 ) {
     throw new RangeError('Outside of valid range');
-  } else if (max < min) {
-    min = Math.floor(min);
-    max = Math.floor(max);
+  } if (max < min) {
     [min, max] = [max, min]
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -64,6 +64,14 @@ const MESSAGES = [
 
 const PHOTOS = 25;
 const MAX_NUMBER_OF_COMMENTS = 5;
+const MAX_ID = 25;
+const MIN_ID = 1;
+const MAX_URL_PHOTOS = 1;
+const MIN_URL_PHOTOS = 25;
+const MAX_AVATAR = 6;
+const MIN_AVATAR = 1;
+const MIN_LIKES = 15;
+const MAX_LIKES = 200;
 
 let commentID = 0;                                            // счетчик комментариев; можно сделать случайным по аналогии с айдишниками описаний и фото
 let descriptionIDs =[];                                       // Глобальный массив идентификаторов
@@ -85,46 +93,35 @@ const getRandomIntID = (idArrayName, min, max) => {
 };
 
 const getRandomArrayElement = (elements) => {
-  return elements[Math.floor(Math.random() * elements.length)];
+  return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
-// Cоздаем один коментарий
-const createComment = () => {
+// Cоздаем один коментарии
+const createComments = () => {
+  let messages = MESSAGES.filter((msg,idx) => idx % 2);
 
   return {
     id: getCommentID(),
-    avatar: 'img/avatar-' + getRandomIntIncl(1, 6) +'.svg',
-    message: getRandomArrayElement(MESSAGES),
+    avatar: 'img/avatar-' + getRandomIntIncl(MIN_AVATAR, MAX_AVATAR) +'.svg',
+    message: messages,
     name: getRandomArrayElement(NAMES),
   };
-};
-
-// Создаем массив комментариев
-const createComments = (maxNumberOfComments) => {
-  let comments = [];
-  let numberOfComments = getRandomIntIncl(1, maxNumberOfComments);
-
-  for (let i = 0; i < numberOfComments; i++){
-    let comment = createComment();
-    comments.push(comment);
-  }
-  return comments;
 };
 
 // Создаем одно описание одной фотографии
 const createPhotoDescription = () => {
 
   return {
-    id: getRandomIntID(descriptionIDs, 1, 25),
-    url: 'photos/' + getRandomIntID(photoIDs, 1, 25) + '.jpg',
+    id: getRandomIntID(descriptionIDs, MIN_ID, MAX_ID),
+    url: 'photos/' + getRandomIntID(photoIDs, MIN_URL_PHOTOS, MAX_URL_PHOTOS) + '.jpg',
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntIncl(15, 200),
+    likes: getRandomIntIncl(MIN_LIKES, MAX_LIKES),
     comments: createComments(MAX_NUMBER_OF_COMMENTS),
   };
 };
 
 // Создаем массив описаний  фотографий
-const createPhotoDescriptionArray = (numberOfPhotos) => {
+const createPhotos = (numberOfPhotos) => {
   let photoDescriptionArray = [];
 
   for (let i = 0; i < numberOfPhotos; i++) {
@@ -134,7 +131,7 @@ const createPhotoDescriptionArray = (numberOfPhotos) => {
   return photoDescriptionArray;
 }
 
-const descriptionArray = createPhotoDescriptionArray(PHOTOS);
+const descriptionArray = createPhotos(PHOTOS);
 
 /* eslint-disable no-console */
 console.log(descriptionArray);
