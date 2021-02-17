@@ -2,16 +2,28 @@
 import { getRandomIntIncl, getRandomArrayElement } from './util.js';
 
 // Константы
-const PHOTOS_COUNT = 25;
 const COMMENTS_COUNT_MAX = 5;
-const MAX_ID = 25;
-const MIN_ID = 1;
-const MAX_URL_PHOTOS = 1;
-const MIN_URL_PHOTOS = 25;
-const MAX_AVATAR = 6;
-const MIN_AVATAR = 1;
-const MIN_LIKES = 15;
-const MAX_LIKES = 200;
+
+const ID = {
+  MIN: 1,
+  MAX: 25,
+}
+
+const PHOTOS = {
+  MIN_URL: 1,
+  MAX_URL: 25,
+  COUNT: 25,
+}
+
+const AVATAR = {
+  MIN: 1,
+  MAX: 6,
+}
+
+const LIKES = {
+  MIN: 15,
+  MAX: 200,
+}
 
 const DESCRIPTIONS = [
   'Не заинстаграмил - не поел',
@@ -64,7 +76,7 @@ const createComments = () => {
 
   return {
     id: getCommentID(),
-    avatar: 'img/avatar-' + getRandomIntIncl(MIN_AVATAR, MAX_AVATAR) +'.svg',
+    avatar: 'img/avatar-' + getRandomIntIncl(AVATAR.MIN, AVATAR.MAX) +'.svg',
     message: messages,
     name: getRandomArrayElement(NAMES),
   };
@@ -74,10 +86,10 @@ const createComments = () => {
 const createPhotoDescription = () => {
 
   return {
-    id: getRandomIntID(descriptionIDs, MIN_ID, MAX_ID),
-    url: 'photos/' + getRandomIntID(photoIDs, MIN_URL_PHOTOS, MAX_URL_PHOTOS) + '.jpg',
+    id: getRandomIntID(descriptionIDs, ID.MIN, ID.MAX),
+    url: 'photos/' + getRandomIntID(photoIDs, PHOTOS.MIN_URL, PHOTOS.MAX_URL) + '.jpg',
     description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntIncl(MIN_LIKES, MAX_LIKES),
+    likes: getRandomIntIncl(LIKES.MIN, LIKES.MAX),
     comments: createComments(COMMENTS_COUNT_MAX),
   };
 };
@@ -93,7 +105,7 @@ const createPhotos = (numberOfPhotos) => {
   return photoDescriptionArray;
 }
 
-const photos = createPhotos(PHOTOS_COUNT);
+const photos = createPhotos(PHOTOS.COUNT);
 
 /* eslint-disable no-console */
 console.log(photos);
