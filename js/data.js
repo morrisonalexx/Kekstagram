@@ -1,9 +1,9 @@
 //Импорты
-import {getRandomIntIncl, getRandomArrayElement} from './util.js';
+import { getRandomIntIncl, getRandomArrayElement } from './util.js';
 
 // Константы
-const PHOTOS = 25;
-const MAX_NUMBER_OF_COMMENTS = 5;
+const PHOTOS_COUNT = 25;
+const COMMENTS_COUNT_MAX = 5;
 const MAX_ID = 25;
 const MIN_ID = 1;
 const MAX_URL_PHOTOS = 1;
@@ -58,7 +58,7 @@ const getRandomIntID = (idArrayName, min, max) => {
 };
 
 
-// Cоздаем один коментарии
+// Cоздаем один коментарий
 const createComments = () => {
   let messages = MESSAGES.filter((msg,idx) => idx % 2);
 
@@ -78,7 +78,7 @@ const createPhotoDescription = () => {
     url: 'photos/' + getRandomIntID(photoIDs, MIN_URL_PHOTOS, MAX_URL_PHOTOS) + '.jpg',
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomIntIncl(MIN_LIKES, MAX_LIKES),
-    comments: createComments(MAX_NUMBER_OF_COMMENTS),
+    comments: createComments(COMMENTS_COUNT_MAX),
   };
 };
 
@@ -93,7 +93,10 @@ const createPhotos = (numberOfPhotos) => {
   return photoDescriptionArray;
 }
 
-const descriptionArray = createPhotos(PHOTOS);
+const photos = createPhotos(PHOTOS_COUNT);
 
 /* eslint-disable no-console */
-console.log(descriptionArray);
+console.log(photos);
+
+//Экспорт
+export { getRandomIntID, createPhotos, createComments, createPhotoDescription };

@@ -26,19 +26,13 @@ const getRandomIntIncl = (minNumber, maxNumber) => {
     [min, max] = [max, min]
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-try {
-  getRandomIntIncl(5, 15);
-} catch (err) {
-  /* eslint-disable no-console */
-  console.error(err.name + ' : ' + err.message);
-}
+};
 
 //получаем рандомный элемент из массива
 const getRandomArrayElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
-export {getRandomIntIncl, getRandomArrayElement};
+//Экспорт
+export { getRandomIntIncl, getRandomArrayElement, isValidComment };
 
