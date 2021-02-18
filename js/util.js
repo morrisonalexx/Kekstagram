@@ -29,10 +29,10 @@ const getRandomIntIncl = (minNumber, maxNumber) => {
 };
 
 //получаем рандомный элемент из массива
-const getRandomArrayElement = (elements) => {
+const getRandomElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
 //Экспорт
-export { getRandomIntIncl, getRandomArrayElement, isValidComment };
+export { getRandomIntIncl, getRandomElement, isValidComment };
 
