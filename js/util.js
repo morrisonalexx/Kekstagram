@@ -26,6 +26,12 @@ const getRandomElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
+// Нажатие Escape
+
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
 //Экспорт
-export { getRandomIntIncl, getRandomElement, isValidComment };
+export { getRandomIntIncl, getRandomElement, isValidComment, isEscEvent };
 
