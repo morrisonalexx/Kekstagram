@@ -108,7 +108,7 @@ const createPhotoDescription = () => {
   };
 };
 
-// Создаем массив описаний  фотографий
+// Создаем массив описаний фотографий
 const createPhotos = (numberOfPhotos) => {
   let photoDescriptionArray = [];
 
@@ -120,9 +120,6 @@ const createPhotos = (numberOfPhotos) => {
 }
 
 const photoDescriptions = createPhotos(Photos.COUNT);
-
-/* eslint-disable no-console */
-console.log(photoDescriptions);
 
 //Экспорт
 export { photoDescriptions };
