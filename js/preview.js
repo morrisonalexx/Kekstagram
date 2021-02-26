@@ -20,5 +20,4 @@ renderPreviews.forEach(({id, url, comments, likes}) => {
 });
 PICTURES_LIST.appendChild(fragment);
 
-renderPreviews();
 export { renderPreviews };
