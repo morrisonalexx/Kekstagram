@@ -1,23 +1,24 @@
+import { createPhotos } from './data.js';
 
-const PICTURE_LIST = document.querySelector('pictures'); // находим блок где должны быть изображения
+const PICTURES_COUNT = 25;
 const PICTURE_TEMPLATE = document.querySelector('#picture').content.querySelector('.picture'); //получаем шаблон изобраэения
+const PICTURES_LIST = document.querySelector('.pictures');
+const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
+const renderPreviews = createPhotos(PICTURES_COUNT);
 
-const renderPictures = (pictures) => {
-  const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
+renderPreviews.forEach(({id, url, comments, likes}) => {
+  const newPictureElement = PICTURE_TEMPLATE.cloneNode(true); // клонируем полностью содержание шаблона
+  const newPictureUrl = newPictureElement.querySelector('.picture__img');
+  const newPictureLikes = newPictureElement.querySelector('.picture__likes');
+  const newPictureComments = newPictureElement.querySelector('.picture__comments');
 
-  pictures.forEach((picture) => {
-    const newPictureElement = PICTURE_TEMPLATE.cloneNode(true); // клонируем полностью содержание шаблона
-    const newPictureImage = newPictureElement.querySelector('.picture__img'); // изображение записываем в переменную
-    const newPictureLikes = newPictureElement.querySelector('.picture__likes'); // likes записываем в переменную
-    const newPictureComments = newPictureElement.querySelector('.picture__comments'); // комментарии записываем в переменную
+  newPictureElement.dataset.id = id;
+  newPictureUrl.src = url;
+  newPictureComments.textContent = comments.length;
+  newPictureLikes.textContent = likes;
+  fragment.appendChild(newPictureElement); //добавляем готовое изображение в корзину
+});
+PICTURES_LIST.appendChild(fragment);
 
-    newPictureImage.src = picture.url;
-    newPictureComments.textContent = picture.comments.length;
-    newPictureLikes.textContent = picture.likes;
-
-    fragment.appendChild(newPictureElement); //добавляем готовое изображение в корзину
-  });
-  PICTURE_LIST.appendChild(fragment); // добавляем корзину для изображений в в блок .pictures
-};
-
-export { renderPictures };
+renderPreviews();
+export { renderPreviews };

@@ -110,17 +110,16 @@ const createPhotoDescription = () => {
 
 // Создаем массив описаний фотографий
 const createPhotos = (numberOfPhotos) => {
-  let photoDescriptionArray = [];
+  let photoDescription = [];
 
   for (let i = 0; i < numberOfPhotos; i++) {
     let photoDescriptions = createPhotoDescription();
-    photoDescriptionArray.push(photoDescriptions);
+    photoDescription.push(photoDescriptions);
   }
-  return photoDescriptionArray;
+  return photoDescription;
 }
 
-const photoDescriptions = createPhotos(Photos.COUNT);
 
 //Экспорт
-export { photoDescriptions };
+export { createPhotos };
 

@@ -26,9 +26,15 @@ const getRandomElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
-// Нажатие Escape
-const isEscEvent = (evt) =>  evt.key === ('Escape' || 'Esc');
+// // Нажатие Escape
+// const ESC_KEYS = ['Escape', 'Esc'];
+
+// const isEscEvent = (evt) => {
+//   if (ESC_KEYS.includes(evt.key)) {
+//     popup.classList.remove('hidden')
+//   }
+// };
 
 //Экспорт
-export { getRandomIntIncl, getRandomElement, isValidComment, isEscEvent };
+export { getRandomIntIncl, getRandomElement, isValidComment};
 
