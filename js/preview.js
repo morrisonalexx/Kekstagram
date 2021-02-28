@@ -1,23 +1,35 @@
-import { createPhotos } from './data.js';
-
-const PICTURES_COUNT = 25;
 const PICTURE_TEMPLATE = document.querySelector('#picture').content.querySelector('.picture'); //получаем шаблон изобраэения
 const PICTURES_LIST = document.querySelector('.pictures');
-const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
-const renderPreviews = createPhotos(PICTURES_COUNT);
 
-renderPreviews.forEach(({id, url, comments, likes}) => {
+const renderPreview = (data) => {
   const newPictureElement = PICTURE_TEMPLATE.cloneNode(true); // клонируем полностью содержание шаблона
-  const newPictureUrl = newPictureElement.querySelector('.picture__img');
-  const newPictureLikes = newPictureElement.querySelector('.picture__likes');
-  const newPictureComments = newPictureElement.querySelector('.picture__comments');
+  newPictureElement.querySelector('.picture__img').dataset.id = data.id;
+  newPictureElement.querySelector('.picture__img').src = data.url;
+  newPictureElement.querySelector('.picture__likes').textContent = data.comments.length;
+  newPictureElement.querySelector('.picture__comments').textContent = data.likes;
 
-  newPictureElement.dataset.id = id;
-  newPictureUrl.src = url;
-  newPictureComments.textContent = comments.length;
-  newPictureLikes.textContent = likes;
-  fragment.appendChild(newPictureElement); //добавляем готовое изображение в корзину
-});
-PICTURES_LIST.appendChild(fragment);
+  return newPictureElement;
+}
 
-export { renderPreviews };
+const renderAllPreviews  = (pictures) => {
+  const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
+  pictures.forEach((pictureData) => {
+    const newPictureElement = renderPreview(pictureData);
+    fragment.appendChild(newPictureElement); //добавляем готовое изображение в корзину
+  })
+
+  return fragment;
+};
+
+const removeChildren = (parent, selector) => {
+  const children = parent.querySelectorAll(selector);
+  children.forEach(child => parent.removeChild(child));
+}
+
+const placeRenderPreviews = (pictures) => {
+  removeChildren(PICTURES_LIST, '.picture');
+  PICTURES_LIST.appendChild(renderAllPreviews(pictures));
+}
+
+
+export { placeRenderPreviews };
