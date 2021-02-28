@@ -197,7 +197,7 @@
   <!-- Шаблон изображения случайного пользователя -->
   <template id="picture">
     <a href="#" class="picture">
-      <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография">
+      <img class="picture__img" src="" width="182" height="182" alt="Случайная фотография" tabindex="0">
       <p class="picture__info">
         <span class="picture__comments"></span>
         <span class="picture__likes"></span>
@@ -231,7 +231,7 @@
   </template>
 
   <!-- Шаблон комментария -->
-  <template id="messages">
+  <template id="comment">
     <li class="social__comment">
       <img class="social__picture" src="{{аватар}}" alt="{{имя комментатора}}" width="35" height="35">
       <p class="social__text">{{текст комментария}}</p>
