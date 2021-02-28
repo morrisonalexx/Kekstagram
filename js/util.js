@@ -6,13 +6,6 @@ const isValidComment = (comment, maxLength = 140) => {
   return comment.length > maxLength;
 }
 
-try {
-  isValidComment('комментарий');
-} catch (err) {
-  /* eslint-disable no-console */
-  console.error(err.name + ':' + err.message)
-}
-
 // Возвразщает случайное целое число из диапозона
 const getRandomIntIncl = (minNumber, maxNumber) => {
   let min = Math.floor(minNumber);
@@ -33,6 +26,15 @@ const getRandomElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
+// // Нажатие Escape
+// const ESC_KEYS = ['Escape', 'Esc'];
+
+// const isEscEvent = (evt) => {
+//   if (ESC_KEYS.includes(evt.key)) {
+//     popup.classList.remove('hidden')
+//   }
+// };
+
 //Экспорт
-export { getRandomIntIncl, getRandomElement, isValidComment };
+export { getRandomIntIncl, getRandomElement, isValidComment};
 

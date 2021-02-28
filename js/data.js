@@ -8,18 +8,18 @@ const Id = {
   MAX: 25,
 }
 
-const photos = {
+const Photos = {
   MIN_URL: 1,
   MAX_URL: 25,
   COUNT: 25,
 }
 
-const avatar = {
+const Avatar = {
   MIN: 1,
   MAX: 6,
 }
 
-const likes = {
+const Likes = {
   MIN: 15,
   MAX: 200,
 }
@@ -90,7 +90,7 @@ const getComment = () => {
 
   return {
     id: getID(),
-    avatar: getAvatarUrl(getRandomIntIncl(avatar.MIN, avatar.MAX)),
+    avatar: getAvatarUrl(getRandomIntIncl(Avatar.MIN, Avatar.MAX)),
     message: getMessage(),
     name: getRandomElement(NAMES),
   };
@@ -101,29 +101,25 @@ const createPhotoDescription = () => {
 
   return {
     id: getRandomIntID(descriptionIDs, Id.MIN, Id.MAX),
-    url: getPhotoUrl(getRandomIntID(photoIDs, photos.MIN_URL, photos.MAX_URL)),
+    url: getPhotoUrl(getRandomIntID(photoIDs, Photos.MIN_URL, Photos.MAX_URL)),
     description: getRandomElement(DESCRIPTIONS),
-    likes: getRandomIntIncl(likes.MIN, likes.MAX),
+    likes: getRandomIntIncl(Likes.MIN, Likes.MAX),
     comments: getComment(),
   };
 };
 
-// Создаем массив описаний  фотографий
+// Создаем массив описаний фотографий
 const createPhotos = (numberOfPhotos) => {
-  let photoDescriptionArray = [];
+  let photoDescription = [];
 
   for (let i = 0; i < numberOfPhotos; i++) {
     let photoDescriptions = createPhotoDescription();
-    photoDescriptionArray.push(photoDescriptions);
+    photoDescription.push(photoDescriptions);
   }
-  return photoDescriptionArray;
+  return photoDescription;
 }
 
-const photoDescriptions = createPhotos(photos.COUNT);
-
-/* eslint-disable no-console */
-console.log(photoDescriptions);
 
 //Экспорт
-export { photoDescriptions };
+export { createPhotos };
 
