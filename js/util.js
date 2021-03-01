@@ -27,12 +27,8 @@ const getRandomElement = (elements) => {
 };
 
 // Нажатие ESC
-const ESC_KEYS = ['Escape', 'Esc'];
-
 const isEscEvent = (evt) => {
-  if (ESC_KEYS.includes(evt.key)) {
-    popup.classList.remove('hidden')
-  }
+  return evt.key === ('Escape' || 'Esc');
 };
 
 //Экспорт
