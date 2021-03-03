@@ -1,17 +1,26 @@
 import { isEscEvent } from './util.js';
-import { placeBigPictureComments, bigPicture } from './comments.js';
+import { placeBigPictureComments, BIG_PICTURE } from './comments.js';
 
-const closeButton = bigPicture.querySelector('#picture-cancel');
-const body = document.querySelector('body');
-const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-const bigPIctureLikes = bigPicture.querySelector('.likes-count');
-const bigPIctureDescription = bigPicture.querySelector('.social__caption');
-const commentsLoader = bigPicture.querySelector('.comments-loader');
-const commentsCount = bigPicture.querySelector('.social__comment-count');
-const bigPicureComments = bigPicture.querySelector('.comments-count');
+const CLOSE_BUTTON = BIG_PICTURE.querySelector('#picture-cancel');
+const BODY = document.querySelector('body');
+const bigPictureImg = BIG_PICTURE.querySelector('.big-picture__img');
+const bigPIctureLikes = BIG_PICTURE.querySelector('.likes-count');
+const bigPIctureDescription = BIG_PICTURE.querySelector('.social__caption');
+const COMMENTS_LOADER = BIG_PICTURE.querySelector('.comments-loader');
+const COMMENTS_COUNT = BIG_PICTURE.querySelector('.social__comment-count');
+const bigPicureComments = BIG_PICTURE.querySelector('.comments-count');
 
+const clickHandler = evt => {
+  evt.preventDefault();
+  closeBigPicture();
+}
 
 const renderBigPictureData = (bigPictureData) => {
+  BIG_PICTURE.classList.remove('hidden');
+  BODY.classList.add('modal-open');
+  COMMENTS_LOADER.classList.add('hidden');
+  COMMENTS_COUNT.classList.add('hidden');
+
   bigPictureImg.src = bigPictureData.url;
   bigPicureComments.textContent = bigPictureData.comments.length;
   bigPIctureLikes.textContent = bigPictureData.likes;
@@ -19,25 +28,16 @@ const renderBigPictureData = (bigPictureData) => {
   placeBigPictureComments(bigPictureData);
 }
 
-const openBigPicture = (bigPictureData) => {
-  bigPicture.classList.remove('hidden');
-  body.classList.add('modal-open');
-  commentsLoader.classList.add('hidden');
-  commentsCount.classList.add('hidden');
-  renderBigPictureData(bigPictureData);
-}
+CLOSE_BUTTON.addEventListener('click', clickHandler);
 
 const closeBigPicture = () => {
-  bigPicture.classList.add('hidden');
-  body.classList.remove('modal-open');
-  commentsLoader.classList.remove('hidden');
-  commentsCount.classList.remove('hidden');
+  BIG_PICTURE.classList.add('hidden');
+  BODY.classList.remove('modal-open');
+  COMMENTS_LOADER.classList.remove('hidden');
+  COMMENTS_COUNT.classList.remove('hidden');
 }
 
-closeButton.addEventListener('click', () => {
-  closeBigPicture();
-});
-
+// Закрытие модала ESC
 document.addEventListener('keydown', (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
@@ -45,7 +45,4 @@ document.addEventListener('keydown', (evt) => {
   }
 });
 
-export { openBigPicture };
-
-
-
+export { renderBigPictureData };

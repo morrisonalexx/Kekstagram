@@ -1,25 +1,25 @@
-const bigPicture = document.querySelector('.big-picture');
-const commentTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
-const bigPIctureCommentsList = bigPicture.querySelector('.social__comments');
+const BIG_PICTURE = document.querySelector('.big-picture');
+const COMMENT_TEMPLATE = document.querySelector('#comment').content.querySelector('.social__comment');
+const bigPIctureCommentsList = BIG_PICTURE.querySelector('.social__comments');
 
 const clearComments = (comments) => {
-  while (comments.firstChild) {
-    comments.removeChild(comments.firstChild);
-  }
+  comments.textContent = '';
 }
 
 const renderBigPictureComment = (commentData) => {
-  let comment = commentTemplate.cloneNode(true); // клонируем содержание шаблона комменнтария
-  comment.querySelector('.social__picture').src = commentData.avatar;
-  comment.querySelector('.social__picture').alt = commentData.name;
+  const comment = COMMENT_TEMPLATE.cloneNode(true); // клонируем содержание шаблона комменнтария
+  const element = comment.querySelector('.social__picture');
+
+  element.src = commentData.avatar;
+  element.alt = commentData.name;
   comment.querySelector('.social__text').innerText = commentData.message;
 
   return comment;
 };
 
 const renderBigPictureComments = (commentsData) => {
-  let fragment = document.createDocumentFragment(); // создаем "корзину" для готовых комментов
-  let newCommentElement = renderBigPictureComment(commentsData.comments);
+  const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых комментов
+  const newCommentElement = renderBigPictureComment(commentsData.comments);
   fragment.appendChild(newCommentElement); //  добавляем готовые комменты в корзину
 
   return fragment;
@@ -30,4 +30,4 @@ const placeBigPictureComments = (bigPictureComments) => {
   bigPIctureCommentsList.appendChild(renderBigPictureComments(bigPictureComments));
 }
 
-export { placeBigPictureComments, bigPicture }
+export { placeBigPictureComments, BIG_PICTURE }
