@@ -1,8 +1,14 @@
 //Импорт
-/*eslint no-unused-vars:*/
-import { placeBigPictureComments } from './comments.js';
+import { renderBigPicture } from './big-picture.js';
 import { createPhotos } from './data.js';
-import { placeRenderPreviews } from './preview.js';
+import { placePreviews } from './preview.js';
 
 const PICTURES = createPhotos(25);
-placeRenderPreviews(PICTURES);
+
+const clickHandler = (id) => {
+  const picture = PICTURES.find(item => item.id === Number(id));
+
+  renderBigPicture(picture);
+}
+
+placePreviews(PICTURES, clickHandler);
