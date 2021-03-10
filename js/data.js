@@ -1,8 +1,6 @@
 //Импорты
 import { getRandomIntIncl, getRandomElement } from './util.js';
 
-// Константы
-
 const Id = {
   MIN: 1,
   MAX: 25,
@@ -72,41 +70,28 @@ const getRandomIntID = (idArrayName, min, max) => {
   return randomIntID;
 };
 
-const getMessage = () => {                                  // создаем комментарии
-  let messages = MESSAGES.filter(() => getRandomIntIncl(0, 1)).slice(0, 2).join(' ');
-  return messages;
-}
+const getMessage = () => MESSAGES.filter(() => getRandomIntIncl(0, 1)).slice(0, 2).join(' ');
 
-const getAvatarUrl = (id) => {                                  // создаем аватар
-  return `img/avatar-${id}.svg`;
-}
+const getAvatarUrl = (id) =>`img/avatar-${id}.svg`;
 
-const getPhotoUrl = (id) => {                                  // создаем URL
-  return `photos/${id}.jpg`;
-}
+const getPhotoUrl = (id) => `photos/${id}.jpg`;
 
 // Cоздаем один коментарий
-const getComment = () => {
-
-  return {
-    id: getID(),
-    avatar: getAvatarUrl(getRandomIntIncl(Avatar.MIN, Avatar.MAX)),
-    message: getMessage(),
-    name: getRandomElement(NAMES),
-  };
-};
+const getComment = () => ({
+  id: getID(),
+  avatar: getAvatarUrl(getRandomIntIncl(Avatar.MIN, Avatar.MAX)),
+  message: getMessage(),
+  name: getRandomElement(NAMES),
+});
 
 // Создаем одно описание одной фотографии
-const createPhotoDescription = () => {
-
-  return {
-    id: getRandomIntID(descriptionIDs, Id.MIN, Id.MAX),
-    url: getPhotoUrl(getRandomIntID(photoIDs, Photos.MIN_URL, Photos.MAX_URL)),
-    description: getRandomElement(DESCRIPTIONS),
-    likes: getRandomIntIncl(Likes.MIN, Likes.MAX),
-    comments: getComment(),
-  };
-};
+const createPhotoDescription = () =>({
+  id: getRandomIntID(descriptionIDs, Id.MIN, Id.MAX),
+  url: getPhotoUrl(getRandomIntID(photoIDs, Photos.MIN_URL, Photos.MAX_URL)),
+  description: getRandomElement(DESCRIPTIONS),
+  likes: getRandomIntIncl(Likes.MIN, Likes.MAX),
+  comments: getComment(),
+});
 
 // Создаем массив описаний фотографий
 const createPhotos = (numberOfPhotos) => {
@@ -119,7 +104,6 @@ const createPhotos = (numberOfPhotos) => {
   return photoDescription;
 }
 
-
 //Экспорт
-export { createPhotos };
+export { createPhotos, createPhotoDescription };
 

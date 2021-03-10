@@ -1,3 +1,7 @@
+
+const ESC_KEYS = ['Escape', 'Esc'];
+
+
 // проверка длины и типа комментария
 const isValidComment = (comment, maxLength = 140) => {
   if (typeof comment != 'string') {
@@ -26,15 +30,8 @@ const getRandomElement = (elements) => {
   return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
-// // Нажатие Escape
-// const ESC_KEYS = ['Escape', 'Esc'];
-
-// const isEscEvent = (evt) => {
-//   if (ESC_KEYS.includes(evt.key)) {
-//     popup.classList.remove('hidden')
-//   }
-// };
+const isEscEvent = (evt) => ESC_KEYS.includes(evt.key);
 
 //Экспорт
-export { getRandomIntIncl, getRandomElement, isValidComment};
+export { getRandomIntIncl, getRandomElement, isValidComment, isEscEvent};
 
