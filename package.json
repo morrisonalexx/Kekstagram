@@ -17,7 +17,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "lodash.random": "^3.2.0"
+    "lodash.random": "^3.2.0",
+    "nouislider": "^14.6.3"
   },
   "scripts": {
     "start": "browser-sync start --server --no-ui --files \"js/**/*.js\"",
