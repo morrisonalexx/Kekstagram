@@ -29,13 +29,16 @@ const removeChildren = (parent, selector) => {
   children.forEach(child => parent.removeChild(child));
 }
 
+
 const placePreviews = (pictures, onClick) => {
-  const clickHandler = evt => onClick(evt.target.getAttribute('data-id'));
+  PICTURES_LIST.addEventListener('click', (evt) => {
+    if (evt.target.className === 'picture__img') {
+      onClick(evt.target.getAttribute('data-id'));
+    }
+  });
 
   removeChildren(PICTURES_LIST, '.picture');
   PICTURES_LIST.appendChild(renderAllPreviews(pictures));
-  PICTURES_LIST.addEventListener('click', clickHandler)
 }
-
 
 export { placePreviews };
