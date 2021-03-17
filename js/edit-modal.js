@@ -7,12 +7,6 @@ const body = document.querySelector('body');
 const previewImageElement = document.querySelector('.img-upload__preview').querySelector('img');
 const cancelUpload = document.querySelector('#upload-cancel');
 const uploadForm = document.querySelector('.img-upload__form');
-
-const MIN_SIZE_VALUE = 25;
-const MAX_SIZE_VALUE = 100;
-const STEP_SIZE = 25;
-let photoSize = 100;
-
 const uploadButton = document.querySelector('.img-upload__input');
 const scaleButton = document.querySelector('.img-upload__scale');
 const controlValue = document.querySelector('.scale__control--value');
@@ -21,6 +15,10 @@ const effectSlider = document.querySelector('.effect-level__slider');
 const effectList = document.querySelector('.effects__list');
 const effectLevel = document.querySelector('.img-upload__effect-level');
 const effectLevelValue = document.querySelector('.effect-level__value');
+const MIN_SIZE_VALUE = 25;
+const MAX_SIZE_VALUE = 100;
+const STEP_SIZE = 25;
+let photoSize = controlValue.value;
 
 const SLIDER_FILTERS = {
   none: {
@@ -90,9 +88,8 @@ const SLIDER_FILTERS = {
   },
 };
 
-
 //форма по умолчанию
-const defaultForm = () => {
+const resetForm = () => {
   const inputs = [...uploadForm.querySelectorAll('.input-invalid')]
 
   previewImageElement.style = {};
@@ -104,7 +101,7 @@ const defaultForm = () => {
 };
 
 ///Открыть - Закрыть форму
-const onEscKeydown = (evt) => {
+const handleEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeModal();
@@ -115,32 +112,24 @@ const onCloseClick = () => {
   closeModal();
 };
 
-const openModal = () => {
+const getModal = () => {
   effectLevel.classList.add('hidden');
-
   imageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onEscKeydown);
+  document.addEventListener('keydown', handleEscKeydown);
   cancelUpload.addEventListener('click', onCloseClick);
-
 };
 
 const closeModal = () => {
   imageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  defaultForm();
-  document.removeEventListener('keydown', onEscKeydown);
+  resetForm();
+  document.removeEventListener('keydown', handleEscKeydown);
   cancelUpload.removeEventListener('click', onCloseClick);
 };
 
-uploadButton.addEventListener('change', (evt) => {
-  evt.preventDefault();
-  openModal();
-});
-
 //Уменьшение - увеличение картинки
-const reducesSize = () => {
+const reduceSize = () => {
   if (photoSize > MIN_SIZE_VALUE) {
     photoSize -= STEP_SIZE;
     previewImageElement.style.transform = `scale(0.${photoSize})`;
@@ -153,28 +142,49 @@ const reducesSize = () => {
 const increaseSize = () => {
   if (photoSize < MAX_SIZE_VALUE) {
     photoSize += STEP_SIZE;
-    previewImageElement.style.transform = `scale(0.${photoSize})`;
   }
 
   if (photoSize === MAX_SIZE_VALUE) {
-    previewImageElement.style.transform = 'scale(1)';
     scaleBigger.setAttribute('disabled', 'disabled');
   }
 
+  previewImageElement.style.transform = `scale(${photoSize/100})`;
   controlValue.value = `${photoSize}%`;
 }
 
-scaleButton.addEventListener('click', (evt) => {
+const handleScaleClick = (evt) => {
   const className = evt.target.classList[1];
   if (className === 'scale__control--smaller') {
-    reducesSize();
+    reduceSize();
   }
 
   if (className === 'scale__control--bigger') {
     increaseSize();
   }
-});
+}
 
+const handleCheckName = (evt) => {
+  if (evt.target.tagName === 'SPAN') {
+    const className = evt.target.classList[1];
+    const modifier = className.split('--')[1];
+    const isModifierNone = modifier === 'none';
+    const filter = SLIDER_FILTERS[modifier];
+
+    previewImageElement.className = '';
+    previewImageElement.classList.add(className);
+    isModifierNone ? effectLevel.classList.add('hidden') : effectLevel.classList.remove('hidden');
+
+    effectSlider.noUiSlider.updateOptions(filter.options);
+
+    effectSlider.noUiSlider.on('update', (value, handle) => {
+      effectLevelValue.value = value[handle];
+      previewImageElement.style.filter =
+        `${filter.effect}`
+        +
+        (isModifierNone ? '' : `(${effectLevelValue.value}${filter.measurement})`);
+    })
+  }
+}
 
 //Наложение эффекта на изображение
 noUiSlider.create(effectSlider, {
@@ -192,33 +202,11 @@ noUiSlider.create(effectSlider, {
       }
       return value.toFixed(1);
     },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    from: parseFloat,
   },
 });
 
-effectList.addEventListener('click', (evt) => {
-  if (evt.target.tagName === 'SPAN') {
-    const className = evt.target.classList[1];
-    const modifier = className.split('--')[1];
-    const isModifierNone = modifier === 'none';
-    const filter = SLIDER_FILTERS[modifier];
+scaleButton.addEventListener('click', handleScaleClick);
+effectList.addEventListener('click', handleCheckName);
 
-    previewImageElement.className = '';
-    previewImageElement.classList.add(className);
-    isModifierNone ? effectLevel.classList.add('hidden') : effectLevel.classList.remove('hidden');
-
-    effectSlider.noUiSlider.updateOptions(filter.options);
-
-    effectSlider.noUiSlider.on('update', (values, handle) => {
-      effectLevelValue.value = values[handle];
-      previewImageElement.style.filter =
-        `${filter.effect}`
-        +
-        (isModifierNone ? '' : `(${effectLevelValue.value}${filter.measurement})`);
-    })
-  }
-});
-
-export { closeModal }
+export { closeModal, getModal, uploadButton }

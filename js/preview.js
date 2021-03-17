@@ -29,11 +29,10 @@ const removeChildren = (parent, selector) => {
   children.forEach(child => parent.removeChild(child));
 }
 
-
 const placePreviews = (pictures, onClick) => {
-  PICTURES_LIST.addEventListener('click', (evt) => {
-    if (evt.target.className === 'picture__img') {
-      onClick(evt.target.getAttribute('data-id'));
+  PICTURES_LIST.addEventListener('click', getId => {
+    if (getId.target.className === 'picture__img') {
+      onClick(getId.target.getAttribute('data-id'));
     }
   });
 
