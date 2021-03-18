@@ -3,6 +3,7 @@ import { renderBigPicture } from './big-picture.js';
 import { createPhotos } from './data.js';
 import { placePreviews } from './preview.js';
 import { closeModal, getModal, uploadButton } from './edit-modal.js';
+import './form-validation.js';
 
 const PICTURES = createPhotos(25);
 
