@@ -19,7 +19,7 @@ const closeBigPicture = () => {
   COMMENTS_COUNT.classList.remove('hidden');
 }
 
-const clickHandler = evt => {
+const clickHandler = (evt) => {
   evt.preventDefault();
   closeBigPicture();
 }

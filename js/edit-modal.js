@@ -112,7 +112,7 @@ const onCloseClick = () => {
   closeModal();
 };
 
-const getModal = () => {
+const showModal = () => {
   effectLevel.classList.add('hidden');
   imageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
@@ -137,7 +137,7 @@ const reduceSize = () => {
   }
 
   controlValue.value = `${photoSize}%`;
-}
+};
 
 const increaseSize = () => {
   if (photoSize < MAX_SIZE_VALUE) {
@@ -150,7 +150,7 @@ const increaseSize = () => {
 
   previewImageElement.style.transform = `scale(${photoSize/100})`;
   controlValue.value = `${photoSize}%`;
-}
+};
 
 const handleScaleClick = (evt) => {
   const className = evt.target.classList[1];
@@ -161,8 +161,9 @@ const handleScaleClick = (evt) => {
   if (className === 'scale__control--bigger') {
     increaseSize();
   }
-}
+};
 
+//Наложение эффекта на изображение
 const handleCheckName = (evt) => {
   if (evt.target.tagName === 'SPAN') {
     const className = evt.target.classList[1];
@@ -170,23 +171,34 @@ const handleCheckName = (evt) => {
     const isModifierNone = modifier === 'none';
     const filter = SLIDER_FILTERS[modifier];
 
+
+    const filterValue = (value, handle) => {
+      effectLevelValue.value = value[handle];
+      const effectStrength = `(${effectLevelValue.value}${filter.measurement})`;
+      previewImageElement.style.filter = `${filter.effect}${(isModifierNone ? '' : effectStrength)}`;
+    };
+
     previewImageElement.className = '';
     previewImageElement.classList.add(className);
     isModifierNone ? effectLevel.classList.add('hidden') : effectLevel.classList.remove('hidden');
 
     effectSlider.noUiSlider.updateOptions(filter.options);
-
-    effectSlider.noUiSlider.on('update', (value, handle) => {
-      effectLevelValue.value = value[handle];
-      previewImageElement.style.filter =
-        `${filter.effect}`
-        +
-        (isModifierNone ? '' : `(${effectLevelValue.value}${filter.measurement})`);
-    })
+    effectSlider.noUiSlider.on('update', filterValue);
   }
-}
+};
 
-//Наложение эффекта на изображение
+
+const formatValueTo = (value) => {
+  if (Number.isInteger(value)) {
+    return value.toFixed(0);
+  }
+  return value.toFixed(1);
+};
+
+const formatValueFrom = (value) => {
+  return parseFloat(value);
+};
+
 noUiSlider.create(effectSlider, {
   range: {
     min: 0,
@@ -196,17 +208,12 @@ noUiSlider.create(effectSlider, {
   step: 1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: parseFloat,
+    to: formatValueTo,
+    from: formatValueFrom,
   },
 });
 
 scaleButton.addEventListener('click', handleScaleClick);
 effectList.addEventListener('click', handleCheckName);
 
-export { closeModal, getModal, uploadButton }
+export { closeModal, showModal, uploadButton };

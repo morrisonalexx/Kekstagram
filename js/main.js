@@ -2,7 +2,7 @@
 import { renderBigPicture } from './big-picture.js';
 import { createPhotos } from './data.js';
 import { placePreviews } from './preview.js';
-import { closeModal, getModal, uploadButton } from './edit-modal.js';
+import { closeModal, showModal, uploadButton } from './edit-modal.js';
 import './form-validation.js';
 
 const PICTURES = createPhotos(25);
@@ -13,12 +13,14 @@ const clickHandler = (id) => {
   renderBigPicture(picture);
 }
 
+const openModal = (evt) => {
+  evt.preventDefault();
+  showModal();
+}
+
 placePreviews(PICTURES, clickHandler);
 
-uploadButton.addEventListener('change', (evt) => {
-  evt.preventDefault();
-  getModal();
-});
+uploadButton.addEventListener('change', openModal);
 
 closeModal ();
 

@@ -26,15 +26,18 @@ const onHashTagValidation = (evt) => {
   }
 
   const hashtagsBox = input.value.trim().toLowerCase().split(' ').filter(string => string);
-  const hashtagsArray = Array.from(new Set(hashtagsBox));
+
+  const checkDuplicateHashtags = (hashtagsBox) => {
+    return new Set(hashtagsBox).size !== hashtagsBox.length
+  }
 
   // проверки
-  if (hashtagsBox.length > hashtagsArray.length) {
-    input.setCustomValidity('Недопускается использование дублирующих хещтегов');
+  if (checkDuplicateHashtags(hashtagsBox)) {
+    input.setCustomValidity('Не допускается использование дублирующих хештегов');
   } else if (hashtagsBox.length > MAX_HASHTAG_COUNT) {
     input.setCustomValidity('Допускается использование не более 5 хештегов');
   } else {
-    hashtagsArray.forEach(hashtag => {
+    hashtagsBox.forEach(hashtag => {
       if (hashtag.length === 1 || hashtag.charAt(0) !== '#') {
         input.setCustomValidity('Хэштег должен начинается с символа #, и не может состоять только из него одного');
       } else if (hashtag.length > MAX_HASHTAG_LENGTH) {
@@ -42,7 +45,7 @@ const onHashTagValidation = (evt) => {
       } else if (!(/^[а-яА-ЯёЁa-zA-Z0-9]+$/).test(hashtag.substring(1))) {
         input.setCustomValidity('Строка после символа # должна состоять из букв и чисел и не может содержать другие символы и пробелы');
       } else {
-        input.isCustomValidity('');
+        input.setCustomValidity('');
         input.classList.remove('input-invalid');
       }
     })

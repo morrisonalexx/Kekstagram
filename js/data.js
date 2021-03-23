@@ -55,7 +55,7 @@ const getIdCounter = () => {
   return function() {
     return count++;
   }
-}
+};
 
 let getID = getIdCounter();
 
@@ -85,7 +85,7 @@ const getComment = () => ({
 });
 
 // Создаем одно описание одной фотографии
-const createPhotoDescription = () =>({
+const createPhotoDescription = () => ({
   id: getRandomIntID(descriptionIDs, Id.MIN, Id.MAX),
   url: getPhotoUrl(getRandomIntID(photoIDs, Photos.MIN_URL, Photos.MAX_URL)),
   description: getRandomElement(DESCRIPTIONS),
@@ -102,7 +102,7 @@ const createPhotos = (numberOfPhotos) => {
     photoDescription.push(photoDescriptions);
   }
   return photoDescription;
-}
+};
 
 //Экспорт
 export { createPhotos, createPhotoDescription };
