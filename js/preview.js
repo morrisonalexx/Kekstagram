@@ -25,18 +25,17 @@ const renderAllPreviews = (pictures) => {
 
 const removeChildren = (parent, selector) => {
   let children = parent.querySelectorAll(selector);
-
   children.forEach(child => parent.removeChild(child));
 }
 
+const getElementId = (evt, onClick) => {
+  if (evt.target.className === 'picture__img') {
+    onClick(evt.target.getAttribute('data-id'));
+  }
+};
 
-const placePreviews = (pictures, onClick) => {
-  PICTURES_LIST.addEventListener('click', (evt) => {
-    if (evt.target.className === 'picture__img') {
-      onClick(evt.target.getAttribute('data-id'));
-    }
-  });
-
+const placePreviews = (pictures) => {
+  PICTURES_LIST.addEventListener('click', getElementId);
   removeChildren(PICTURES_LIST, '.picture');
   PICTURES_LIST.appendChild(renderAllPreviews(pictures));
 }
