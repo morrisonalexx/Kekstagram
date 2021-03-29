@@ -19,7 +19,6 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const MIN_SIZE_VALUE = 25;
 const MAX_SIZE_VALUE = 100;
 const STEP_SIZE = 25;
-const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 const effectsPreview = document.querySelectorAll('.effects__preview');
 let photoSize = controlValue.value;
 
@@ -218,13 +217,9 @@ noUiSlider.create(effectSlider, {
 //загружаем собственное фото
 const uploadUserPhoto = (evt) => {
   const file = uploadButton.files[0];
-  const fileName = file.name.toLowerCase();
   const reader = new FileReader();
-  const matches = FILE_TYPES.some((it) => {
-    return fileName.endsWith(it);
-  })
 
-  if (evt.target.value !== '' && matches) {
+  if (evt.target.value !== '') {
     imageOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
     effectLevel.classList.add('hidden');
