@@ -4,7 +4,7 @@ const Urls = {
 }
 
 const request = (onSuccess, onError, method, data) => {
-  fetch(
+  return fetch(
     Urls[method],
     {
       method: method,

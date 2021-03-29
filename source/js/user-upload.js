@@ -70,16 +70,14 @@ const onFilterFormClick = getDebounce((evt) => {
 const renderUserImages = () => {
   request((data) => {
     photos = data.slice();
-    renderPhotos(photos)
+    renderPhotos(photos);
     imgFilter.classList.remove('img-filters--inactive');
     filterForm.addEventListener('click', onFilterFormClick);
   }, () => {
-    const errorFetchTemplate = document.querySelector('#errorFetch').content;
-    const errorFetchBlock = errorFetchTemplate.cloneNode(true);
-    document.body.appendChild(errorFetchBlock);
+    const DATA_ERROR_TEMPLATE = document.querySelector('#data-error').content;
+    const dataError = DATA_ERROR_TEMPLATE.cloneNode(true);
+    document.body.appendChild(dataError);
   }, 'GET');
 }
 
-renderUserImages();
-
-export {templateFragment};
+export { templateFragment, renderUserImages };

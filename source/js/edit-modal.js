@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 /* global noUiSlider:readonly */
 import { isEscEvent } from './util.js';
+import noUiSlider from 'nouislider';
 
 const imageOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -18,6 +19,8 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const MIN_SIZE_VALUE = 25;
 const MAX_SIZE_VALUE = 100;
 const STEP_SIZE = 25;
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+const effectsPreview = document.querySelectorAll('.effects__preview');
 let photoSize = controlValue.value;
 
 const SLIDER_FILTERS = {
@@ -187,7 +190,6 @@ const handleCheckName = (evt) => {
   }
 };
 
-
 const formatValueTo = (value) => {
   if (Number.isInteger(value)) {
     return value.toFixed(0);
@@ -213,7 +215,39 @@ noUiSlider.create(effectSlider, {
   },
 });
 
+//загружаем собственное фото
+const uploadUserPhoto = (evt) => {
+  const file = uploadButton.files[0];
+  const fileName = file.name.toLowerCase();
+  const reader = new FileReader();
+  const matches = FILE_TYPES.some((it) => {
+    return fileName.endsWith(it);
+  })
+
+  if (evt.target.value !== '' && matches) {
+    imageOverlay.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    effectLevel.classList.add('hidden');
+
+    reader.addEventListener('load', () => {
+      previewImageElement.src = reader.result;
+      for (let i = 0; i < effectsPreview.length; i++) {
+        effectsPreview[i].style.background = `url(${reader.result})`;
+        effectsPreview[i].style.backgroundSize = 'contain';
+        effectsPreview[i].style.backgroundPosition = 'center';
+        effectsPreview[i].style.backgroundRepeat = 'no-repeat';
+      }
+    })
+
+    cancelUpload.addEventListener('click', onCloseClick);
+    document.addEventListener('keydown', handleEscKeydown);
+  }
+
+  reader.readAsDataURL(file);
+};
+
+uploadButton.addEventListener('change', uploadUserPhoto);
 scaleButton.addEventListener('click', handleScaleClick);
 effectList.addEventListener('click', handleCheckName);
 
-export { closeModal, showModal, uploadButton, imageOverlay };
+export { closeModal, showModal, uploadButton, imageOverlay, uploadUserPhoto};

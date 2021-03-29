@@ -45,10 +45,10 @@ const closeErrorModalOnEsc = (evt) => {
 }
 
 const showSuccessMessage = () => {
-  const SUCCESS_TEMPLATEBlock = SUCCESS_TEMPLATE.cloneNode(true);
-  document.body.appendChild(SUCCESS_TEMPLATEBlock);
-  const successDiv = SUCCESS_TEMPLATEBlock.querySelector('.success__inner');
-  const successButton = SUCCESS_TEMPLATEBlock.querySelector('.success__button');
+  const SUCCESS_TEMPLATE_BOX = SUCCESS_TEMPLATE.cloneNode(true);
+  document.body.appendChild(SUCCESS_TEMPLATE_BOX);
+  const successDiv = SUCCESS_TEMPLATE_BOX.querySelector('.success__inner');
+  const successButton = SUCCESS_TEMPLATE_BOX.querySelector('.success__button');
   successDiv.tabIndex = 1;
   successDiv.style.outline = 'none';
   successDiv.focus();
@@ -60,11 +60,11 @@ const showSuccessMessage = () => {
 }
 
 const showErrorMessage = () => {
-  const errorPostTemplate = document.querySelector('#error').content.querySelector('.error');
-  const errorPostTemplateBlock = errorPostTemplate.cloneNode(true);
-  document.body.appendChild(errorPostTemplateBlock);
-  const errorButton = errorPostTemplateBlock.querySelector('.error__button');
-  const errorDiv = errorPostTemplateBlock.querySelector('.error__inner');
+  const ERROR_TEMPLATE = document.querySelector('#error').content.querySelector('.error');
+  const ERROR_TEMPLATE_BOX = ERROR_TEMPLATE.cloneNode(true);
+  document.body.appendChild(ERROR_TEMPLATE_BOX);
+  const errorButton = ERROR_TEMPLATE_BOX.querySelector('.error__button');
+  const errorDiv = ERROR_TEMPLATE_BOX.querySelector('.error__inner');
   errorDiv.tabIndex = 1;
   errorDiv.style.outline = 'none';
   errorDiv.focus();
