@@ -11,10 +11,11 @@ const renderPreview = (data) => {
   newPictureElement.querySelector('.picture__comments').textContent = data.likes;
 
   return newPictureElement;
-}
+};
 
 const renderAllPreviews = (pictures) => {
   const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
+
   pictures.forEach((pictureData) => {
     const newPictureElement = renderPreview(pictureData);
     fragment.appendChild(newPictureElement); //добавляем готовое изображение в корзину
@@ -26,18 +27,17 @@ const renderAllPreviews = (pictures) => {
 const removeChildren = (parent, selector) => {
   let children = parent.querySelectorAll(selector);
   children.forEach(child => parent.removeChild(child));
-}
-
-const getElementId = (evt, onClick) => {
-  if (evt.target.className === 'picture__img') {
-    onClick(evt.target.getAttribute('data-id'));
-  }
 };
 
-const placePreviews = (pictures) => {
-  PICTURES_LIST.addEventListener('click', getElementId);
+const placePreviews = (pictures, onClick) => {
+  PICTURES_LIST.addEventListener('click', evt => {
+    if (evt.target.className === 'picture__img') {
+      onClick(evt.target.getAttribute('data-id'));
+    }
+  });
+
   removeChildren(PICTURES_LIST, '.picture');
   PICTURES_LIST.appendChild(renderAllPreviews(pictures));
-}
+};
 
 export { placePreviews };

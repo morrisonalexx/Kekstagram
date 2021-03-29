@@ -1,9 +1,7 @@
-import { isEscEvent } from './util.js';
-import { isValidComment } from './util.js';
+import { isEscEvent, isValidComment, MAX_COMMENT_LENGTH } from './util.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
-const MAX_COMMENT_LENGTH = isValidComment;
 
 const hashtags = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
@@ -61,8 +59,8 @@ const onCommentValidation = (evt) => {
 
   if (!input.value) {
     input.setCustomValidity('');
-  } else if (input.value.length > MAX_COMMENT_LENGTH) {
-    input.setCustomValidity('Длина комментария не может составлять больше 140 символов')
+  } else if (!isValidComment(input.value)) {
+    input.setCustomValidity(`Длина комментария не может составлять больше ${MAX_COMMENT_LENGTH} символов`);
   } else {
     input.setCustomValidity('');
     input.classList.remove('input-invalid')
