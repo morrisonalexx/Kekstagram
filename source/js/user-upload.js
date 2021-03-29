@@ -22,7 +22,7 @@ const renderUserImage = ({url, comments, likes}) => {
   });
 
   return userImage;
-}
+};
 
 const renderPhotos = (data) => {
   let fragment = document.createDocumentFragment();
@@ -31,7 +31,7 @@ const renderPhotos = (data) => {
   });
 
   userPictures.appendChild(fragment);
-}
+};
 
 const removePhotos = () => {
   const pictures = userPictures.querySelectorAll('.picture');
@@ -40,7 +40,7 @@ const removePhotos = () => {
       photo.remove()
     })
   }
-}
+};
 
 let photos = [];
 
@@ -54,7 +54,7 @@ const filters = {
   'filter-discussed': () => {
     return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
   },
-}
+};
 
 const onFilterFormClick = getDebounce((evt) => {
   if (!evt.target.classList.contains('img-filters__button--active')) {
@@ -78,6 +78,6 @@ const renderUserImages = () => {
     const dataError = DATA_ERROR_TEMPLATE.cloneNode(true);
     document.body.appendChild(dataError);
   }, 'GET');
-}
+};
 
 export { templateFragment, renderUserImages };

@@ -13,7 +13,7 @@ const closeSuccesModalOnClick = (evt) => {
       successSection.remove();
     }
   }
-}
+};
 
 const closeSuccesModalOnEsc = (evt) => {
   if (isEscEvent(evt)) {
@@ -23,7 +23,7 @@ const closeSuccesModalOnEsc = (evt) => {
     }
     document.body.removeEventListener('keydown', closeSuccesModalOnEsc);
   }
-}
+};
 
 const closeErrorModalOnClick = (evt) => {
   if (evt.currentTarget) {
@@ -32,7 +32,7 @@ const closeErrorModalOnClick = (evt) => {
       errorSection.remove();
     }
   }
-}
+};
 
 const closeErrorModalOnEsc = (evt) => {
   if (isEscEvent(evt)) {
@@ -42,7 +42,7 @@ const closeErrorModalOnEsc = (evt) => {
     }
     document.removeEventListener('keydown', closeErrorModalOnEsc);
   }
-}
+};
 
 const showSuccessMessage = () => {
   const SUCCESS_TEMPLATE_BOX = SUCCESS_TEMPLATE.cloneNode(true);
@@ -57,7 +57,7 @@ const showSuccessMessage = () => {
   successButton.addEventListener('click', closeSuccesModalOnClick);
   document.body.addEventListener('keydown', closeSuccesModalOnEsc);
   UPLOAD_FILE.value = '';
-}
+};
 
 const showErrorMessage = () => {
   const ERROR_TEMPLATE = document.querySelector('#error').content.querySelector('.error');
@@ -74,7 +74,7 @@ const showErrorMessage = () => {
   document.body.addEventListener('keydown', closeErrorModalOnEsc);
   errorDiv.addEventListener('blur', closeErrorModalOnClick);
   UPLOAD_FILE.value = '';
-}
+};
 
 IMG_UPLOAD_FORM.addEventListener('submit', (evt) => {
   evt.preventDefault();

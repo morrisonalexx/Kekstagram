@@ -32,6 +32,7 @@ const renderComments = (comments) => {
     COMMENTS_LIST.appendChild(renderComment(comments[i]));
     i++;
   }
+
   start += 5;
   if (start >= comments.length) {
     COMMENTS_COUNT.childNodes[0].textContent = `${comments.length} из `;
@@ -39,7 +40,7 @@ const renderComments = (comments) => {
   } else {
     COMMENTS_COUNT.childNodes[0].textContent = `${start} из `;
   }
-}
+};
 
 const renderBigPicture = (image) => {
   IMG.src = image.url;
@@ -48,14 +49,16 @@ const renderBigPicture = (image) => {
   DESCRIPTION.textContent = image.description;
   COMMENTS_LIST.innerHTML = '';
   start = 0;
+
   if (image.comments.length > SHOWN_COMMENTS) {
     COMMENTS_LOADER.classList.remove('hidden');
   }
+
   renderComments(image.comments);
   COMMENTS_LOADER.onclick = () => {
     renderComments(image.comments);
-  }
-}
+  };
+};
 
 const openBigPicture = (image) => {
   COMMENTS_COUNT.classList.remove('hidden');
@@ -64,27 +67,27 @@ const openBigPicture = (image) => {
   document.body.classList.add('modal-open');
   BIG_PICTURE.classList.remove('hidden');
   document.addEventListener('keydown', closeBigPictureOnEsc);
-}
+};
 
 const closeBigPicture = () => {
   document.body.classList.remove('modal-open');
   BIG_PICTURE.classList.add('hidden');
   CLOSE_BUTTON.removeEventListener('click', closeBigPicture);
   document.removeEventListener('keydown', closeBigPictureOnEsc);
-}
+};
 
 const clickHandler = (evt) => {
   evt.preventDefault();
   closeBigPicture();
-}
-
-CLOSE_BUTTON.addEventListener('click', clickHandler);
+};
 
 // Закрытие модала ESC
 const closeBigPictureOnEsc = (evt) => {
   if (isEscEvent(evt)) {
     closeBigPicture();
   }
-}
+};
+
+CLOSE_BUTTON.addEventListener('click', clickHandler);
 
 export { openBigPicture };

@@ -11,7 +11,7 @@ const openModal = (evt) => {
   evt.preventDefault();
   showModal();
   uploadUserPhoto();
-}
+};
 
 renderUserImages();
 

@@ -173,7 +173,6 @@ const handleCheckName = (evt) => {
     const isModifierNone = modifier === 'none';
     const filter = SLIDER_FILTERS[modifier];
 
-
     const filterValue = (value, handle) => {
       effectLevelValue.value = value[handle];
       const effectStrength = `(${effectLevelValue.value}${filter.measurement})`;

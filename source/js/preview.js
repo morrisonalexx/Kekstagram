@@ -11,7 +11,7 @@ const renderPreview = (data) => {
   newPictureElement.querySelector('.picture__comments').textContent = data.likes;
 
   return newPictureElement;
-}
+};
 
 const renderAllPreviews = (pictures) => {
   const fragment = document.createDocumentFragment(); // создаем "корзину" для готовых изображений
@@ -27,8 +27,7 @@ const renderAllPreviews = (pictures) => {
 const removeChildren = (parent, selector) => {
   let children = parent.querySelectorAll(selector);
   children.forEach(child => parent.removeChild(child));
-}
-
+};
 
 const placePreviews = (pictures, onClick) => {
   PICTURES_LIST.addEventListener('click', evt => {
