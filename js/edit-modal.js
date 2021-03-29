@@ -216,4 +216,4 @@ noUiSlider.create(effectSlider, {
 scaleButton.addEventListener('click', handleScaleClick);
 effectList.addEventListener('click', handleCheckName);
 
-export { closeModal, showModal, uploadButton };
+export { closeModal, showModal, uploadButton, imageOverlay };
