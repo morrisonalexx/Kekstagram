@@ -1,5 +1,4 @@
-import { isEscEvent } from './util.js';
-import { isValidComment, MAX_COMMENT_LENGTH } from './util.js';
+import { isEscEvent, isValidComment, MAX_COMMENT_LENGTH } from './util.js';
 
 const MAX_HASHTAG_LENGTH = 20;
 const MAX_HASHTAG_COUNT = 5;
