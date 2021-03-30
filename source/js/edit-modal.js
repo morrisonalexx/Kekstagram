@@ -1,6 +1,9 @@
 // eslint-disable-next-line no-unused-vars
 /* global noUiSlider:readonly */
 import { isEscEvent } from './util.js';
+import noUiSlider from 'nouislider';
+import { description, hashtags } from './form-validation.js';
+
 
 const imageOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -95,7 +98,8 @@ const resetForm = () => {
   previewImageElement.style = {};
   previewImageElement.className = '';
   photoSize = 100;
-
+  hashtags.value = '';
+  description.value = '';
   inputs.forEach(input => input.classList.remove('input-invalid'))
   uploadForm.reset();
 };
@@ -171,7 +175,6 @@ const handleCheckName = (evt) => {
     const isModifierNone = modifier === 'none';
     const filter = SLIDER_FILTERS[modifier];
 
-
     const filterValue = (value, handle) => {
       effectLevelValue.value = value[handle];
       const effectStrength = `(${effectLevelValue.value}${filter.measurement})`;
@@ -186,7 +189,6 @@ const handleCheckName = (evt) => {
     effectSlider.noUiSlider.on('update', filterValue);
   }
 };
-
 
 const formatValueTo = (value) => {
   if (Number.isInteger(value)) {
@@ -213,7 +215,37 @@ noUiSlider.create(effectSlider, {
   },
 });
 
+//загружаем собственное фото
+const uploadUserPhoto = () => {
+  const file = uploadButton.files[0];
+  const reader = new FileReader();
+
+  if (uploadButton.value !== '') {
+    imageOverlay.classList.remove('hidden');
+    document.body.classList.add('modal-open');
+    effectLevel.classList.add('hidden');
+
+    reader.addEventListener('load', () => {
+      previewImageElement.src = reader.result;
+      const effectPreviews = [...document.querySelectorAll('.effects__preview')];
+
+      effectPreviews.forEach (effectsPreview => {
+        effectsPreview.style.background = `url(${reader.result})`;
+        effectsPreview.style.backgroundSize = 'contain';
+        effectsPreview.style.backgroundPosition = 'center';
+        effectsPreview.style.backgroundRepeat = 'no-repeat';
+      });
+    });
+
+    cancelUpload.addEventListener('click', onCloseClick);
+    document.addEventListener('keydown', handleEscKeydown);
+  }
+
+  reader.readAsDataURL(file);
+};
+
+uploadButton.addEventListener('change', uploadUserPhoto);
 scaleButton.addEventListener('click', handleScaleClick);
 effectList.addEventListener('click', handleCheckName);
 
-export { closeModal, showModal, uploadButton };
+export { closeModal, showModal, uploadButton, imageOverlay, uploadUserPhoto, resetForm };
