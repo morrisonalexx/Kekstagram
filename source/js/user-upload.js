@@ -47,6 +47,17 @@ const removePhotos = () => {
 let photos = [];
 
 
+// const createFilters  = (filter) => {
+//   switch(filter) {
+//     case 'filter-default':
+//       return photos.slice();
+//     case 'filter-random':
+//       return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
+//     case 'filter-discussed':
+//       return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
+//   }
+// };
+
 const createFilters = {
   'filter-default': () => {
     return photos.slice()
