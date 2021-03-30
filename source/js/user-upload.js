@@ -60,9 +60,8 @@ const createFilters  = (filter) => {
 
 const onFilterFormClick = getDebounce((evt) => {
   if (!evt.target.classList.contains('img-filters__button--active')) {
-    for (let i = 0; i < filterForm.children.length; i++) {
-      filterForm.children[i].classList.remove('img-filters__button--active');
-    }
+
+    filterForm.children.forEach(child => { child.classList .remove('img-filters__button--active')});
     evt.target.classList.add('img-filters__button--active');
     removePhotos();
     renderPhotos(createFilters(evt.target.id));

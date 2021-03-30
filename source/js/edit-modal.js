@@ -105,7 +105,7 @@ const resetForm = () => {
 };
 
 ///Открыть - Закрыть форму
-const handleEscKeydown = (evt) => {
+const onEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     closeModal();
@@ -120,7 +120,7 @@ const showModal = () => {
   effectLevel.classList.add('hidden');
   imageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
-  document.addEventListener('keydown', handleEscKeydown);
+  document.addEventListener('keydown', onEscKeydown);
   cancelUpload.addEventListener('click', onCloseClick);
 };
 
@@ -128,7 +128,7 @@ const closeModal = () => {
   imageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   resetForm();
-  document.removeEventListener('keydown', handleEscKeydown);
+  document.removeEventListener('keydown', onEscKeydown);
   cancelUpload.removeEventListener('click', onCloseClick);
 };
 
@@ -156,7 +156,7 @@ const increaseSize = () => {
   controlValue.value = `${photoSize}%`;
 };
 
-const handleScaleClick = (evt) => {
+const onScaleClick = (evt) => {
   const className = evt.target.classList[1];
   if (className === 'scale__control--smaller') {
     reduceSize();
@@ -168,7 +168,7 @@ const handleScaleClick = (evt) => {
 };
 
 //Наложение эффекта на изображение
-const handleCheckName = (evt) => {
+const onCheckName = (evt) => {
   if (evt.target.tagName === 'SPAN') {
     const className = evt.target.classList[1];
     const modifier = className.split('--')[1];
@@ -216,7 +216,7 @@ noUiSlider.create(effectSlider, {
 });
 
 //загружаем собственное фото
-const uploadUserPhoto = () => {
+const onUploadUserPhoto = () => {
   const file = uploadButton.files[0];
   const reader = new FileReader();
 
@@ -238,14 +238,14 @@ const uploadUserPhoto = () => {
     });
 
     cancelUpload.addEventListener('click', onCloseClick);
-    document.addEventListener('keydown', handleEscKeydown);
+    document.addEventListener('keydown', onEscKeydown);
   }
 
   reader.readAsDataURL(file);
 };
 
-uploadButton.addEventListener('change', uploadUserPhoto);
-scaleButton.addEventListener('click', handleScaleClick);
-effectList.addEventListener('click', handleCheckName);
+uploadButton.addEventListener('change', onUploadUserPhoto);
+scaleButton.addEventListener('click', onScaleClick);
+effectList.addEventListener('click', onCheckName);
 
-export { closeModal, showModal, uploadButton, imageOverlay, uploadUserPhoto, resetForm };
+export { closeModal, showModal, uploadButton, imageOverlay, onUploadUserPhoto, resetForm };

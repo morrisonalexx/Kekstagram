@@ -66,14 +66,14 @@ const openBigPicture = (image) => {
   renderBigPicture(image);
   document.body.classList.add('modal-open');
   BIG_PICTURE.classList.remove('hidden');
-  document.addEventListener('keydown', closeBigPictureOnEsc);
+  document.addEventListener('keydown', onEscCloseBigPicture);
 };
 
 const closeBigPicture = () => {
   document.body.classList.remove('modal-open');
   BIG_PICTURE.classList.add('hidden');
   CLOSE_BUTTON.removeEventListener('click', closeBigPicture);
-  document.removeEventListener('keydown', closeBigPictureOnEsc);
+  document.removeEventListener('keydown', onEscCloseBigPicture);
 };
 
 const clickHandler = (evt) => {
@@ -82,7 +82,7 @@ const clickHandler = (evt) => {
 };
 
 // Закрытие модала ESC
-const closeBigPictureOnEsc = (evt) => {
+const onEscCloseBigPicture = (evt) => {
   if (isEscEvent(evt)) {
     closeBigPicture();
   }

@@ -1,5 +1,5 @@
 import { isEscEvent } from './util.js';
-import { imageOverlay, resetForm, uploadUserPhoto } from './edit-modal.js';
+import { imageOverlay, resetForm, onUploadUserPhoto } from './edit-modal.js';
 import { request } from './api.js';
 
 const UPLOAD_FILE = document.querySelector('#upload-file');
@@ -31,7 +31,7 @@ const closeSuccesModalOnEsc = (evt) => {
 };
 
 const errorModalSection = () => {
-  const errorSection = document.querySelector('.error');
+  const errorSection = ERROR_TEMPLATE;
   if (errorSection) {
     errorSection.remove();
   }
@@ -78,7 +78,7 @@ const showErrorMessage = () => {
   errorDiv.focus();
   imageOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  errorButton.addEventListener('click', uploadUserPhoto);
+  errorButton.addEventListener('click', onUploadUserPhoto);
   document.body.addEventListener('keydown', closeErrorModalOnEsc);
   errorDiv.addEventListener('blur', closeErrorModalOnClick);
   UPLOAD_FILE.value = '';
