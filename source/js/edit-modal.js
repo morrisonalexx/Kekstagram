@@ -2,6 +2,8 @@
 /* global noUiSlider:readonly */
 import { isEscEvent } from './util.js';
 import noUiSlider from 'nouislider';
+import { description, hashtags } from './form-validation.js';
+
 
 const imageOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -19,7 +21,6 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const MIN_SIZE_VALUE = 25;
 const MAX_SIZE_VALUE = 100;
 const STEP_SIZE = 25;
-const effectsPreview = document.querySelectorAll('.effects__preview');
 let photoSize = controlValue.value;
 
 const SLIDER_FILTERS = {
@@ -97,7 +98,8 @@ const resetForm = () => {
   previewImageElement.style = {};
   previewImageElement.className = '';
   photoSize = 100;
-
+  hashtags.value = '';
+  description.value = '';
   inputs.forEach(input => input.classList.remove('input-invalid'))
   uploadForm.reset();
 };
@@ -214,24 +216,26 @@ noUiSlider.create(effectSlider, {
 });
 
 //загружаем собственное фото
-const uploadUserPhoto = (evt) => {
+const uploadUserPhoto = () => {
   const file = uploadButton.files[0];
   const reader = new FileReader();
 
-  if (evt.target.value !== '') {
+  if (uploadButton.value !== '') {
     imageOverlay.classList.remove('hidden');
     document.body.classList.add('modal-open');
     effectLevel.classList.add('hidden');
 
     reader.addEventListener('load', () => {
       previewImageElement.src = reader.result;
-      for (let i = 0; i < effectsPreview.length; i++) {
-        effectsPreview[i].style.background = `url(${reader.result})`;
-        effectsPreview[i].style.backgroundSize = 'contain';
-        effectsPreview[i].style.backgroundPosition = 'center';
-        effectsPreview[i].style.backgroundRepeat = 'no-repeat';
-      }
-    })
+      const effectPreviews = [...document.querySelectorAll('.effects__preview')];
+
+      effectPreviews.forEach (effectsPreview => {
+        effectsPreview.style.background = `url(${reader.result})`;
+        effectsPreview.style.backgroundSize = 'contain';
+        effectsPreview.style.backgroundPosition = 'center';
+        effectsPreview.style.backgroundRepeat = 'no-repeat';
+      });
+    });
 
     cancelUpload.addEventListener('click', onCloseClick);
     document.addEventListener('keydown', handleEscKeydown);
@@ -244,4 +248,4 @@ uploadButton.addEventListener('change', uploadUserPhoto);
 scaleButton.addEventListener('click', handleScaleClick);
 effectList.addEventListener('click', handleCheckName);
 
-export { closeModal, showModal, uploadButton, imageOverlay, uploadUserPhoto};
+export { closeModal, showModal, uploadButton, imageOverlay, uploadUserPhoto, resetForm };
