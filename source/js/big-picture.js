@@ -90,4 +90,4 @@ const closeBigPictureOnEsc = (evt) => {
 
 CLOSE_BUTTON.addEventListener('click', clickHandler);
 
-export { openBigPicture };
+export { openBigPicture, DESCRIPTION };
