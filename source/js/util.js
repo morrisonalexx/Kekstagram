@@ -4,7 +4,7 @@ const ALERT_SHOW_TIME = 5000;
 
 // проверка длины и типа комментария
 const isValidComment = (comment, length = MAX_COMMENT_LENGTH) => {
-  if (typeof comment != 'string') {
+  if (typeof comment !== 'string') {
     throw new TypeError('Not a String');
   }
   return comment.length <= length;
@@ -47,7 +47,6 @@ const showAlert = (message) => {
     alertBox.remove();
   }, ALERT_SHOW_TIME);
 }
-
 
 const getDebounce = (cb, interval) => {
   let lastTimeout = null;
