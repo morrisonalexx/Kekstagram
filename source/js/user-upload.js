@@ -9,6 +9,8 @@ const templateFragment = document.querySelector('#picture').content.querySelecto
 const imgFilter = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 
+
+
 const renderUserImage = ({url, comments, likes}) => {
   const userImage = templateFragment.cloneNode(true);
   const userComments = userImage.querySelector('.picture__comments');
@@ -44,16 +46,16 @@ const removePhotos = () => {
 
 let photos = [];
 
-const createFilters = {
-  'filter-default': () => {
-    return photos.slice()
-  },
-  'filter-random': () => {
-    return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY)
-  },
-  'filter-discussed': () => {
-    return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
-  },
+
+const createFilters = (filter) => {
+  switch(filter) {
+    case 'filter-default':
+      return photos.slice();
+    case 'filter-random':
+      return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
+    case 'filter-discussed':
+      return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
+  }
 };
 
 const onFilterFormClick = getDebounce((evt) => {
