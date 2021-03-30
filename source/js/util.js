@@ -63,11 +63,12 @@ const getDebounce = (cb, interval) => {
 };
 
 const shuffleArray = (arr) => {
-  for (let i = arr.length - 1; i > 0; i--) {
+  let tmpArr = [...arr];
+  for (let i = tmpArr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+    [tmpArr[i], tmpArr[j]] = [tmpArr[j], tmpArr[i]];
   }
-  return arr;
+  return tmpArr;
 }
 
 //Экспорт
