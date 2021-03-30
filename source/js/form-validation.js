@@ -6,6 +6,7 @@ const MAX_HASHTAG_COUNT = 5;
 const hashtags = document.querySelector('.text__hashtags');
 const description = document.querySelector('.text__description');
 const uploadText = document.querySelector('.img-upload__text');
+const regExp = /^[а-яА-ЯёЁa-zA-Z0-9]+$/;
 
 //Отмена обработчика Esc при фокусе
 const onCancelEscKeydown = (evt) => {
@@ -13,6 +14,10 @@ const onCancelEscKeydown = (evt) => {
     evt.stopPropagation();
   }
 };
+
+const checkDuplicateHashtags = (hashtagsBox) => {
+  return new Set(hashtagsBox).size !== hashtagsBox.length
+}
 
 //Валидация хештегов
 const onHashTagValidation = (evt) => {
@@ -25,10 +30,6 @@ const onHashTagValidation = (evt) => {
 
   const hashtagsBox = input.value.trim().toLowerCase().split(' ').filter(string => string);
 
-  const checkDuplicateHashtags = (hashtagsBox) => {
-    return new Set(hashtagsBox).size !== hashtagsBox.length
-  }
-
   // проверки
   if (checkDuplicateHashtags(hashtagsBox)) {
     input.setCustomValidity('Не допускается использование дублирующих хештегов');
@@ -40,7 +41,7 @@ const onHashTagValidation = (evt) => {
         input.setCustomValidity('Хэштег должен начинается с символа #, и не может состоять только из него одного');
       } else if (hashtag.length > MAX_HASHTAG_LENGTH) {
         input.setCustomValidity('Максимальная длина одного хэш-тега 20 символов, включая решётку');
-      } else if (!(/^[а-яА-ЯёЁa-zA-Z0-9]+$/).test(hashtag.substring(1))) {
+      } else if (!regExp.test(hashtag.substring(1))) {
         input.setCustomValidity('Строка после символа # должна состоять из букв и чисел и не может содержать другие символы и пробелы');
       } else {
         input.setCustomValidity('');
@@ -82,4 +83,4 @@ uploadText.addEventListener('blur', () => {
   hashtags.removeEventListener('input', onHashTagValidation);
 }, true);
 
-export { uploadText };
+export { uploadText, hashtags, description };

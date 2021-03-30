@@ -1,8 +1,6 @@
-
 const ESC_KEYS = ['Escape', 'Esc'];
 const MAX_COMMENT_LENGTH = 140;
 const ALERT_SHOW_TIME = 5000;
-
 
 // проверка длины и типа комментария
 const isValidComment = (comment, length = MAX_COMMENT_LENGTH) => {
@@ -25,11 +23,6 @@ const getRandomIntIncl = (minNumber, maxNumber) => {
     [min, max] = [max, min]
   }
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-//получаем рандомный элемент из массива
-const getRandomElement = (elements) => {
-  return elements[getRandomIntIncl(0, elements.length-1)];
 };
 
 const isEscEvent = (evt) => ESC_KEYS.includes(evt.key);
@@ -69,15 +62,13 @@ const getDebounce = (cb, interval) => {
   };
 };
 
-const shuffleArray = (a) => {
-  for (let i = a.length - 1; i > 0; i--) {
+const shuffleArray = (arr) => {
+  for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
-  return a;
+  return arr;
 }
 
-
 //Экспорт
-export { getRandomIntIncl, getRandomElement, isValidComment, isEscEvent, MAX_COMMENT_LENGTH, showAlert, shuffleArray, createModalCloseClick, getDebounce};
-
+export { getRandomIntIncl, isValidComment, isEscEvent, MAX_COMMENT_LENGTH, showAlert, shuffleArray, createModalCloseClick, getDebounce };

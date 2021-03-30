@@ -2,6 +2,7 @@
 /* global noUiSlider:readonly */
 import { isEscEvent } from './util.js';
 import noUiSlider from 'nouislider';
+import { description, hashtags } from './form-validation.js';
 
 const imageOverlay = document.querySelector('.img-upload__overlay');
 const body = document.querySelector('body');
@@ -97,7 +98,8 @@ const resetForm = () => {
   previewImageElement.style = {};
   previewImageElement.className = '';
   photoSize = 100;
-
+  hashtags.value = '';
+  description.value = '';
   inputs.forEach(input => input.classList.remove('input-invalid'))
   uploadForm.reset();
 };

@@ -44,7 +44,7 @@ const removePhotos = () => {
 
 let photos = [];
 
-const filters = {
+const createFilters = {
   'filter-default': () => {
     return photos.slice()
   },
@@ -63,7 +63,7 @@ const onFilterFormClick = getDebounce((evt) => {
     }
     evt.target.classList.add('img-filters__button--active');
     removePhotos();
-    renderPhotos(filters[evt.target.id]());
+    renderPhotos(createFilters[evt.target.id]());
   }
 }, RERENDER_DELAY);
 
@@ -80,4 +80,4 @@ const renderUserImages = () => {
   }, 'GET');
 };
 
-export { templateFragment, renderUserImages };
+export { renderUserImages };

@@ -28,12 +28,12 @@ let start = 0;
 
 const renderComments = (comments) => {
   let i = start;
-  while (i < start + 5 && i < comments.length) {
+  while (i < start + SHOWN_COMMENTS && i < comments.length) {
     COMMENTS_LIST.appendChild(renderComment(comments[i]));
     i++;
   }
 
-  start += 5;
+  start += SHOWN_COMMENTS;
   if (start >= comments.length) {
     COMMENTS_COUNT.childNodes[0].textContent = `${comments.length} из `;
     COMMENTS_LOADER.classList.add('hidden');
@@ -55,9 +55,7 @@ const renderBigPicture = (image) => {
   }
 
   renderComments(image.comments);
-  COMMENTS_LOADER.onclick = () => {
-    renderComments(image.comments);
-  };
+  COMMENTS_LOADER.addEventListener('click', renderComments(image.comments));
 };
 
 const openBigPicture = (image) => {
