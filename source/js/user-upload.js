@@ -1,4 +1,4 @@
-import { openBigPicture} from './big-picture.js';
+import { openBigPicture, DESCRIPTION } from './big-picture.js';
 import { request } from './api.js';
 import { getDebounce, shuffleArray } from './util.js';
 
@@ -9,18 +9,19 @@ const templateFragment = document.querySelector('#picture').content.querySelecto
 const imgFilter = document.querySelector('.img-filters');
 const filterForm = document.querySelector('.img-filters__form');
 
-
-
-const renderUserImage = ({url, comments, likes}) => {
+const renderUserImage = ({url, comments, likes, description}) => {
   const userImage = templateFragment.cloneNode(true);
   const userComments = userImage.querySelector('.picture__comments');
   const userLikes = userImage.querySelector('.picture__likes');
+
   userImage.querySelector('.picture__img').src = `./${url}`;
   userComments.textContent = comments.length;
   userLikes.textContent = likes;
+  DESCRIPTION.textContent = description;
+
 
   userImage.addEventListener('click', () => {
-    openBigPicture({url, comments, likes});
+    openBigPicture({url, comments, likes, description});
   });
 
   return userImage;
@@ -46,28 +47,15 @@ const removePhotos = () => {
 
 let photos = [];
 
-
-// const createFilters  = (filter) => {
-//   switch(filter) {
-//     case 'filter-default':
-//       return photos.slice();
-//     case 'filter-random':
-//       return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
-//     case 'filter-discussed':
-//       return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
-//   }
-// };
-
-const createFilters = {
-  'filter-default': () => {
-    return photos.slice()
-  },
-  'filter-random': () => {
-    return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY)
-  },
-  'filter-discussed': () => {
-    return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
-  },
+const createFilters  = (filter) => {
+  switch(filter) {
+    case 'filter-default':
+      return photos.slice();
+    case 'filter-random':
+      return shuffleArray(photos.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
+    case 'filter-discussed':
+      return photos.slice().sort((a, b) => a.comments.length - b.comments.length).reverse();
+  }
 };
 
 const onFilterFormClick = getDebounce((evt) => {
@@ -77,7 +65,7 @@ const onFilterFormClick = getDebounce((evt) => {
     }
     evt.target.classList.add('img-filters__button--active');
     removePhotos();
-    renderPhotos(createFilters[evt.target.id]());
+    renderPhotos(createFilters(evt.target.id));
   }
 }, RERENDER_DELAY);
 

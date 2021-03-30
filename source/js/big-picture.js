@@ -55,8 +55,10 @@ const renderBigPicture = (image) => {
   }
 
   renderComments(image.comments);
-  COMMENTS_LOADER.addEventListener('click', renderComments(image.comments));
+
+  COMMENTS_LOADER.addEventListener('click', () => { renderComments(image.comments) });
 };
+
 
 const openBigPicture = (image) => {
   COMMENTS_COUNT.classList.remove('hidden');
