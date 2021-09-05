@@ -19,6 +19,7 @@ const renderUserImage = ({url, comments, likes, description}) => {
   userLikes.textContent = likes;
   DESCRIPTION.textContent = description;
 
+
   userImage.addEventListener('click', () => {
     openBigPicture({url, comments, likes, description});
   });
